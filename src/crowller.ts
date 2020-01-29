@@ -2,15 +2,27 @@
 
 import superagent from 'superagent'
 import cheerio from 'cheerio'
+import fs from 'fs'
+import path from 'path'
 
 interface Course {
   title: string
   count: number
 }
 
+interface CourseInfo {
+  time: number;
+  data: Course[];
+}
+
+interface Content {
+  [key: string]: Course[]
+}
+
 class Crowller{
   private key = 'secretKey'
   private url = `http://www.dell-lee.com/typescript/demo.html?secret=${this.key}`
+  private dataJsonPath :string = ''
 
   getCourseInfo(html: string){
     const $ = cheerio.load(html)
@@ -28,16 +40,38 @@ class Crowller{
       time: new Date().getTime(),
       data: courseInfos
     }
-    console.log(result)
+    return result
+  }
+
+  generateJsonContent(courseInfo: CourseInfo){
+    this.dataJsonPath = path.join(__dirname, '../data/course.json')
+    let fileContent: Content = {}
+    if(fs.existsSync(this.dataJsonPath)){
+      fileContent = JSON.parse(fs.readFileSync(this.dataJsonPath, 'utf8'))
+    }
+    fileContent[courseInfo.time] = courseInfo.data
+    return fileContent
+  }
+
+  writeFile(content: string){
+    fs.writeFileSync(this.dataJsonPath, content)
   }
 
   async getRawHtml(){
     const result = await superagent.get(this.url)
-    this.getCourseInfo(result.text)
+    return result.text
+    
+  }
+
+  async initSprider(){
+    const html = await this.getRawHtml()
+    const courseInfo: CourseInfo = this.getCourseInfo(html)
+    const content = this.generateJsonContent(courseInfo)
+    this.writeFile(JSON.stringify(content))
   }
 
   constructor(){
-    this.getRawHtml()
+    this.initSprider()
   }
 }
 
