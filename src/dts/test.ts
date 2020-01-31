@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 $(function(){
-  $('').html('<div>123</div>')
+  $('body').html('<div>123</div>')
 })

@@ -4,11 +4,23 @@
 // }
 
 // 可以改写成
-interface Jquery{
-  (readFun: () => void):void
-  (selector: string) : {
-    html: (xml: string) => void
-  }
-}
+// interface Jquery{
+//   (readFun: () => void):void
+//   (selector: string) : {
+//     html: (xml: string) => void
+//   }
+// }
+// declare var $:Jquery
 
-declare var $:Jquery
+
+// 如果是引入的，就把declare放在最外部
+declare module 'jquery'{
+  interface Jquery{
+    (readFun: () => void):void
+    (selector: string) : {
+      html: (xml: string) => void
+    }
+  }
+ var $:Jquery
+ export = $
+}
