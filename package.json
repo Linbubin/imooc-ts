@@ -6,7 +6,8 @@
   "scripts": {
     "dev:start": "nodemon ./build/crowller.js",
     "dev:build": "tsc -w",
-    "dev": "concurrently npm:dev:*"
+    "dev": "concurrently npm:dev:*",
+    "test:build": "parcel ./index.html"
   },
   "nodemonConfig": {
     "ignore": [
@@ -20,6 +21,7 @@
     "@types/cheerio": "^0.22.15",
     "@types/superagent": "^4.1.4",
     "concurrently": "^5.1.0",
+    "parcel": "^2.0.0-alpha.3.2",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   },
