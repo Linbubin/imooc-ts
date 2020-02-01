@@ -32,5 +32,10 @@ class Crowller{
 const filePath = path.join(__dirname, '../data/course.json')
 
 const analyzer = new DellAnalyzer()
-new Crowller(analyzer, filePath)
+
+export default function doSomething():void{
+  new Crowller(analyzer, filePath)
+}
+
+doSomething()
 console.log(12333)
