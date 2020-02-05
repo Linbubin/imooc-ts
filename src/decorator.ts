@@ -90,13 +90,43 @@
 
 
 // 参数装饰器
-function paramDecorator(obj: any, key: string, index: number){
-  console.log(obj, key, index) // Todo { getSome: [Function] } 'getSome' 0
+// function paramDecorator(obj: any, key: string, index: number){
+//   console.log(obj, key, index) // Todo { getSome: [Function] } 'getSome' 0
+// }
+// class Todo{
+//   getSome(@paramDecorator a:string, b:string){
+//     return `${a}, ${b}`
+//   }
+// }
+// const a = new Todo()
+// console.log(a.getSome('aaaa', 'bbb'))
+
+
+// demo
+const testx: any = undefined
+function testDecorator(obj: any, key: string, desc: PropertyDescriptor){
+  const fn = desc.value
+  desc.value = () => {
+    try{
+      fn()
+    }catch(e){
+      console.log('出错了：：', e)
+    }
+  }
 }
 class Todo{
-  getSome(@paramDecorator a:string, b:string){
-    return `${a}, ${b}`
+  @testDecorator
+  getName(){
+    return testx.name
+  }
+  @testDecorator
+  getValue(){
+    return testx.value
+  }
+  @testDecorator
+  getAge(){
+    return testx.age
   }
 }
 const a = new Todo()
-console.log(a.getSome('aaaa', 'bbb'))
+a.getName()
