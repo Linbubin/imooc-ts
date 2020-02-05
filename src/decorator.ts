@@ -44,24 +44,46 @@
 
 
 // 访问器的装饰器
-function visitDecorator(obj: any, key: string, desc: PropertyDescriptor){
-  console.log(obj, key, desc)
-  // 也可以修改writable 来使其不能被改变
-  desc.writable = false
-}
-class Todo{
-  private _name: string
-  constructor(name:string){
-    this._name = name
-  }
-  @visitDecorator
-  set name(v:string){
-    this._name = v
-  }
-  get name(){
-    return this._name
-  }
-}
-const a = new Todo('billy')
-a.name = '123'
-console.log(a.name)
+// function visitDecorator(obj: any, key: string, desc: PropertyDescriptor){
+//   console.log(obj, key, desc)
+//   // 也可以修改writable 来使其不能被改变
+//   desc.writable = false
+// }
+// class Todo{
+//   private _name: string
+//   constructor(name:string){
+//     this._name = name
+//   }
+//   @visitDecorator
+//   set name(v:string){
+//     this._name = v
+//   }
+//   get name(){
+//     return this._name
+//   }
+// }
+// const a = new Todo('billy')
+// a.name = '123'
+// console.log(a.name)
+
+
+// 属性装饰器
+// function keyDecorator(obj:any, key:string){
+//   console.log(obj, key) // Todo {} 'name'
+// }
+// 也可以返回一个prototypedesc
+// function keyDecorator(obj:any, key:string): any{
+//   return {
+//     writable: false
+//   }
+// }
+// class Todo{
+//   @keyDecorator
+//   name: string
+//   constructor(name:string){
+//     this.name = name
+//   }
+// }
+// const a = new Todo('billy')
+// a.name = '123'
+// console.log(a.name)
