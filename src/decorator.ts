@@ -87,3 +87,16 @@
 // const a = new Todo('billy')
 // a.name = '123'
 // console.log(a.name)
+
+
+// 参数装饰器
+function paramDecorator(obj: any, key: string, index: number){
+  console.log(obj, key, index) // Todo { getSome: [Function] } 'getSome' 0
+}
+class Todo{
+  getSome(@paramDecorator a:string, b:string){
+    return `${a}, ${b}`
+  }
+}
+const a = new Todo()
+console.log(a.getSome('aaaa', 'bbb'))
